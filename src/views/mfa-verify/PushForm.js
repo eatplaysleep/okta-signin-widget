@@ -14,7 +14,7 @@ define(['okta', 'util/CookieUtil', 'util/Util'], function (Okta, CookieUtil, Uti
 
   var _ = Okta._;
   // deviceName is escaped on BaseForm (see BaseForm's template)
-  var titleTpl = Okta.Handlebars.compile('{{factorName}} ({{{deviceName}}})');
+  var titleTpl = Okta.tpl('{{factorName}} ({{{deviceName}}})');
   var WARNING_TIMEOUT = 30000; //milliseconds
   var warningTemplate = '<div class="okta-form-infobox-warning infobox infobox-warning">\
                            <span class="icon warning-16"></span>\

@@ -20,13 +20,13 @@ function (Okta, ) {
 
   return TextBox.extend({
 
-    template: Okta.Handlebars.compile('\
+    template: '\
       <span class="okta-form-label-inline o-form-label-inline">{{countryCallingCode}}</span>\
       <span class="okta-form-input-field input-fix o-form-control">\
         <input type="{{type}}" placeholder="{{placeholder}}" name="{{name}}" \
           id="{{inputId}}" value="{{value}}" autocomplete="off"/>\
       </span>\
-    '),
+    ',
 
     initialize: function () {
       this.listenTo(this.model, 'change:countryCallingCode', function () {

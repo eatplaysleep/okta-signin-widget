@@ -12,7 +12,7 @@
 /* eslint complexity: [2, 7] */
 define(['okta', 'q', 'views/shared/TextBox'], function (Okta, Q, TextBox) {
 
-  var subtitleTpl = Okta.Handlebars.compile('({{subtitle}})');
+  var subtitleTpl = Okta.tpl('({{subtitle}})');
   var _ = Okta._;
   var API_RATE_LIMIT = 30000; //milliseconds
   var warningTemplate = '<div class="okta-form-infobox-warning infobox infobox-warning login-timeout-warning">\

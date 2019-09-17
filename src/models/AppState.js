@@ -172,8 +172,7 @@ function (Okta, Q, Factor, BrowserFeatures, Errors) {
       // language picker, etc.
       languageCode: ['string', true],
       disableUsername: ['boolean', false, false],
-      trapMfaRequiredResponse: ['boolean', false, false],
-      lastFailedChallengeFactorData: ['object', false]
+      trapMfaRequiredResponse: ['boolean', false, false]
     },
 
     setAuthResponse: function (res) {
@@ -199,21 +198,6 @@ function (Okta, Q, Factor, BrowserFeatures, Errors) {
       }
 
       this.set('lastAuthResponse', res);
-    },
-
-    clearLastAuthResponse: function () {
-      this.set('lastAuthResponse', {});
-    },
-
-    setLastFailedChallengeFactorData: function () {
-      this.set('lastFailedChallengeFactorData', {
-        factor: this.get('factor'),
-        errorMessage: this.get('factorResultErrorMessage'),
-      });
-    },
-
-    clearLastFailedChallengeFactorData: function () {
-      this.unset('lastFailedChallengeFactorData');
     },
 
     derived: {
@@ -697,22 +681,7 @@ function (Okta, Q, Factor, BrowserFeatures, Errors) {
           }
           return res._links.next.href;
         }
-      },
-      'isFactorResultFailed': {
-        deps: ['lastAuthResponse'],
-        fn: function (res) {
-          return res.factorResult === 'FAILED';
-        }
-      },
-      'factorResultErrorMessage': {
-        deps: ['lastAuthResponse', 'isFactorResultFailed'],
-        fn: function (res, isFactorResultFailed) {
-          if (isFactorResultFailed) {
-            return res.factorResultMessage || Okta.loc('oform.error.unexpected', 'login');
-          }
-          return null;
-        }
-      },
+      }
     },
 
     parse: function (options) {

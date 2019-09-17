@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-/* eslint complexity: [2, 45], max-statements: [2, 30] */
+/* eslint complexity: [2, 42], max-statements: [2, 30] */
 define([
   'okta',
   './OAuth2Util',
@@ -127,7 +127,6 @@ function (Okta, OAuth2Util, Util, Enums, BrowserFeatures, Errors, ErrorCodes) {
   fn.routeAfterAuthStatusChange = function (router, res) {
     // Other errors are handled by the function making the authClient request
     if (!res || !res.status) {
-      router.appState.clearLastAuthResponse();
       return;
     }
 
@@ -140,6 +139,7 @@ function (Okta, OAuth2Util, Util, Enums, BrowserFeatures, Errors, ErrorCodes) {
     fn.handleResponseStatus(router, res);
   };
 
+  // eslint-disable-next-line complexity
   fn.handleResponseStatus = function (router, res) {
     switch (res.status) {
     case 'SUCCESS':
@@ -218,26 +218,14 @@ function (Okta, OAuth2Util, Util, Enums, BrowserFeatures, Errors, ErrorCodes) {
     case 'FACTOR_REQUIRED':
     case 'FACTOR_CHALLENGE':
     case 'MFA_REQUIRED':
-      // When the widget is bootstrapped with an error in MFA_CHALLENGE state, we pass the
-      // lastFailedChallengeFactorData to MFA_REQUIRED, in order to show the error message
-      // on the correct factor view
-      var lastFailedChallengeFactorData = router.appState.get('lastFailedChallengeFactorData');
-      if (lastFailedChallengeFactorData && lastFailedChallengeFactorData.factor) {
-        router.appState.get('factors').lastUsedFactor = lastFailedChallengeFactorData.factor;
-      }
       var factor = router.appState.get('factors').getDefaultFactor();
       var url = fn.createVerifyUrl(factor.get('provider'), factor.get('factorType'));
       router.navigate(url, { trigger: true });
-      router.appState.clearLastFailedChallengeFactorData();
       return;
     case 'MFA_CHALLENGE':
       // Since we normally trap MFA_CHALLENGE, this will only get called on a
-      // page refresh or when an error is returned on verification with an IdP.
-      // We need to return to MFA_REQUIRED to initialize the
+      // page refresh. We need to return to MFA_REQUIRED to initialize the
       // page correctly (i.e. factors dropdown, etc)
-      if (router.appState.get('isFactorResultFailed')) {
-        router.appState.setLastFailedChallengeFactorData();
-      }
       router.appState.get('transaction').prev()
         .then(function (trans) {
           router.appState.set('transaction', trans);
@@ -301,12 +289,15 @@ function (Okta, OAuth2Util, Util, Enums, BrowserFeatures, Errors, ErrorCodes) {
       // Either we have factors and we are in passwordlessAuth mode
       if (router.appState.get('promptForFactorInUnauthenticated')) {
         var defaultFactor = router.appState.get('factors').getDefaultFactor();
-        var factorURL = fn.createVerifyUrl(defaultFactor.get('provider'), defaultFactor.get('factorType'));
-        router.navigate(factorURL, { trigger: true });
-        return;
+        var defaultFactorType = defaultFactor.get('factorType');
+        var factorURL = fn.createVerifyUrl(defaultFactor.get('provider'), defaultFactorType);
+        if (defaultFactorType !== 'password') {
+          router.navigate(factorURL, { trigger: true });
+          return;
+        }
       }
       // Or we don't have anything and we need to show the login page
-      router.navigate('', { trigger: true });
+      router.navigate('signin/register', { trigger: true });
       return;
     default:
       throw new Error('Unknown status: ' + res.status);

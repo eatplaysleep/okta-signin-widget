@@ -43,10 +43,31 @@ function (Okta) {
         if (_.isArray(requireFields)) {
           _.each(requireFields, function (requireField) {
             var field = this.properties.get(requireField);
-            if (field) {
-              field.set('required', true);
+            switch (requireField) {
+            case 'firstName':
+              setRequired(field);
+              break;
+            case 'lastName':
+              setRequired(field);
+              break;
+            case 'dateOfBirth':
+              setRequired(field);
+              break;
+            case 'zipCode':
+              setRequired(field);
+              break;
+            default:
+              if (field) {
+                field.set('required', false);
+              }
             }
           }, this);
+        }
+
+        function setRequired (field) {
+          if (field) {
+            field.set('required', true);
+          }
         }
 
         var fieldOrderIds = resp.schema.fieldOrder;

@@ -8,15 +8,7 @@ define(['./Form'], function (Form) {
 
     buttonBar: function () {
       return this.$('.o-form-button-bar');
-    },
-
-    hasErrorBox: function () {
-      return this.el('o-form-error-container').find('.infobox-error').length > 0;
-    },
-
-    errorBoxMessage: function () {
-      return this.$('.o-form-error-container .infobox-error h4').text().trim();
-    },
+    }
 
   });
 

@@ -23,9 +23,7 @@ define([
 function (Okta, FormController, Enums, RouterUtil, FactorList,
   RequiredFactorList, Footer) {
 
-  var _ = Okta._,
-      $ = Okta.$,
-      subtitleTpl = Okta.tpl('<span>{{{subtitle}}}</span>');
+  var _ = Okta._;
 
   return FormController.extend({
     className: 'enroll-choices',
@@ -44,9 +42,7 @@ function (Okta, FormController, Enums, RouterUtil, FactorList,
         return this.state.get('pageType') === Enums.ALL_OPTIONAL_NONE_ENROLLED;
       },
 
-      subtitle: ' ',
-
-      getSubtitle: function () {
+      subtitle: function () {
         switch (this.state.get('pageType')) {
         case Enums.ALL_OPTIONAL_SOME_ENROLLED:
         case Enums.HAS_REQUIRED_ALL_REQUIRED_ENROLLED:
@@ -68,8 +64,8 @@ function (Okta, FormController, Enums, RouterUtil, FactorList,
 
       getGracePeriodSubtitle: function (remainingDays) {
         return (remainingDays >= 1) ?
-          Okta.loc('enroll.choices.description.gracePeriod.bold', 'login', [remainingDays]) :
-          Okta.loc('enroll.choices.description.gracePeriod.oneDay.bold', 'login');
+          Okta.loc('enroll.choices.description.gracePeriod', 'login', [remainingDays]) :
+          Okta.loc('enroll.choices.description.gracePeriod.oneDay', 'login');
       },
 
       save: function () {
@@ -107,11 +103,6 @@ function (Okta, FormController, Enums, RouterUtil, FactorList,
       },
 
       preRender: function () {
-        // form subtitle does not support unescaped strings, and we need some html elements
-        // in the subtitle for this form. So instead of a regular subtitle, we add a <span>
-        // with the text we need
-        this.add(subtitleTpl({subtitle: this.getSubtitle()}), $('p.okta-form-subtitle'));
-
         var factors = this.options.appState.get('factors');
         switch(this.state.get('pageType')) {
         case Enums.HAS_REQUIRED_NONE_ENROLLED:

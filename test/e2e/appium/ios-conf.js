@@ -13,6 +13,8 @@ module.exports = {
   // ====================
   // Appium Configuration
   // ====================
+  // Default port for Appium
+  port: 4723,
   // Check this link for configurations - https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   // Check this for capabilities - http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
   iosCapabilities: [{
@@ -28,6 +30,15 @@ module.exports = {
     'deviceName': 'iPhone X Simulator',
     'platformName': 'iOS',
     'platformVersion': '11.3',
+    'deviceOrientation': 'portrait',
+    'browserName': 'Safari',
+    'appiumVersion': '1.9.1',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER
+  }, {
+    'deviceName': 'iPhone SE Simulator',
+    'platformName': 'iOS',
+    'platformVersion': '10.3',
     'deviceOrientation': 'portrait',
     'browserName': 'Safari',
     'appiumVersion': '1.9.1',

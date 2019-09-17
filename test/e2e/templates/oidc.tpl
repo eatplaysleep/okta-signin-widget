@@ -23,14 +23,12 @@ function initialize(options) {
       }
 
       if (Array.isArray(res)) {
-        res.forEach(function(token) {
-          if (token.idToken) {
-            addMessageToPage('idtoken_user', token.claims.name);
-          } else if (token.accessToken) {
-            addMessageToPage('accesstoken_type', token.tokenType);
-          }
-        });
-      } else {
+        // Assumes id_token is first, and accessToken is second
+        addMessageToPage('idtoken_user', res[0].claims.name);
+        addMessageToPage('accesstoken_type', res[1].tokenType);
+      }
+
+      else {
         // Simple idToken test case will just unpack the name and add it
         // to the page
         addMessageToPage('idtoken_user', res.claims.name);

@@ -11,7 +11,7 @@
 
 .focused-input,
 .link.help:focus {
-  box-shadow: 0 0 8px rgba(81, 203, 238, 1);
+  box-shadow: $input-border-color-focus;
 }
 
 .o-form-button-bar.focused-input {

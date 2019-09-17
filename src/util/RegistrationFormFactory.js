@@ -1,4 +1,4 @@
-/* eslint max-statements: [2, 23],  max-depth: [2, 3], complexity: [2, 13] */
+/* eslint max-statements: [2, 20],  max-depth: [2, 3], complexity: [2, 9] */
 /*!
  * Copyright (c) 2017, Okta, Inc. and/or its affiliates. All rights reserved.
  * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
@@ -42,17 +42,17 @@ define([
     return userNameParts.filter(Boolean);
   };
 
-  var passwordContainsFormField = function (formField, password) {
-    if(!formField) {
+  var passwordContainsUserName = function (username, password) {
+    if(!username) {
       return false;
     }
-    formField = formField.toLowerCase();
+    username = username.toLowerCase();
     password = password.toLowerCase();
-    var formFieldArr = getParts(formField);
-    //check if each formField part contains password
-    for (var i=0; i < formFieldArr.length; i++){
-      var formFieldPart = formFieldArr[i];
-      if (password.indexOf(formFieldPart) !== -1) {
+    var usernameArr = getParts(username);
+    //check if each username part contains password
+    for (var i=0; i < usernameArr.length; i++){
+      var usernamePart = usernameArr[i];
+      if (password.indexOf(usernamePart) !== -1) {
         return true;
       }
     }
@@ -75,18 +75,14 @@ define([
         return false;
       }
     }
-    var password = value;
+
     if (_.isString(regex)) {
-      // call passwordContainsFormField if regex is userName, firstName, lastName
-      if (regex === '^[#/userName]' || regex === '^[#/firstName]' || regex === '^[#/lastName]') {
-        var fieldName = regex.split('^[#/')[1].split(']')[0];
-        var fieldValue = model.get(fieldName);
-        if (fieldName === 'userName') {
-          // with email as login enabled, we only have email populated
-          // Therefore we fallback and run validation with email attribute.
-          fieldValue = model.has('userName') ? model.get('userName') : model.get('email');
-        }
-        return !passwordContainsFormField(fieldValue, password);
+      if (regex === '^[#/userName]') {
+        // with email as login enabled, we only have email populated
+        // Therefore we fallback and run validation with email attribute.
+        var username = model.has('userName') ? model.get('userName'): model.get('email');
+        var password = value;
+        return !passwordContainsUserName(username, password);
       } else {
         if (!new RegExp(regex).test(value)) {
           return false;
@@ -127,7 +123,7 @@ define([
     });
   };
 
-  var fnCreateInputOptions = function (schemaProperty) {
+  var fnCreateInputOptions = function (schemaProperty, username) {
     var inputOptions = SchemaFormFactory.createInputOptions(schemaProperty);
     if (inputOptions.type === 'select') {
       inputOptions = _.extend(inputOptions, {
@@ -153,11 +149,19 @@ define([
         'icon': 'person-16-gray'
       };
       break;
+    case 'email':
+      inputOptions.disabled = true;
+      inputOptions.params = {
+        'icon': 'person-16-gray',
+        'value': username
+      };
+      break;
     case 'password':
       inputOptions.type = 'password';
       inputOptions.input = TextBox;
+      inputOptions.readOnly = true;
       inputOptions.params = {
-        'icon': 'remote-lock-16'
+        'value': randomPassword()
       };
     }
 
@@ -172,15 +176,6 @@ define([
         },
         'change:userName': function () {
           checkSubSchemas(fieldName, this.model, subSchemas, true);
-        },
-        'change:firstName': function () {
-          checkSubSchemas(fieldName, this.model, subSchemas, true);
-        },
-        'change:lastName': function () {
-          checkSubSchemas(fieldName, this.model, subSchemas, true);
-        },
-        'change:email': function () {
-          checkSubSchemas(fieldName, this.model, subSchemas, true);
         }
       };
     }
@@ -191,6 +186,17 @@ define([
   return {
     createInputOptions : fnCreateInputOptions,
     getUsernameParts: getParts,
-    passwordContainsFormField: passwordContainsFormField
+    passwordContainsUserName: passwordContainsUserName
   };
 });
+
+function randomPassword () {
+  var length = 15;
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

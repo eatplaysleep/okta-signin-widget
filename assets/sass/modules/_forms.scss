@@ -1,10 +1,12 @@
 /* Form */
 
 .o-form-head {
-  font-size: $font-size-header;
-  line-height: 1.5;
-  margin-top: 10px;
-  text-align: center;
+  font-size: $h4-font-size;
+  line-height: $h4-line-height;
+  color: $header-text-color;
+  // margin-top: 10px;
+  margin-bottom: 28px;
+  text-align: left;
   text-transform: none;
 
   + .o-form-explain {
@@ -15,15 +17,18 @@
 
 .o-form-button-bar {
   background: transparent;
-  border: none;
-  padding: 0 0 25px;
-  border-radius: 0;
+  border: 0px;
   box-shadow: none;
+  padding: 0;
+  border-radius: $button-radius;
+  width: $button-width;
+  height: $button-height;
+  float: right;
 
   .button {
     display: block;
     width: 100%;
-    height: $button-height;
+    height: 100%;
   }
 
   .button-success {
@@ -56,17 +61,27 @@
   label,
   input,
   textarea {
-    font-size: $font-size;
+    font-size: $input-label-font-size;
   }
 
   .o-form-label {
     font-weight: normal;
+    font-size: $input-label-font-size;
+    line-height: $input-label-line-height;
+    position: absolute;
+    padding: $input-label-padding;
+    color: $input-label-color;
   }
 
   .o-form-label-inline + .input-fix {
     input {
       &[type="text"] {
-        line-height: 27px;
+        height: $input-height;
+        font-size: $input-label-font-size;
+        color: $input-label-color;
+        padding: $input-label-padding;
+        line-height: $input-label-line-height;
+        font-weight: 500;
       }
     }
   }
@@ -77,6 +92,11 @@
     border: 1px solid $input-border-color;
     display: inline-block;
     float: left;
+    font-size: $input-label-font-size;
+    color: $input-label-color;
+    padding: $input-label-padding;
+    line-height: $input-label-line-height;
+    font-weight: $input-label-font-weight;
 
     input[disabled],
     input[readonly] {
@@ -84,29 +104,34 @@
     }
 
     input {
-      padding: 8px;
-      line-height: 22px;
-      font-size: $font-size;
+      padding: $input-label-padding;
+      line-height: $input-label-line-height;
+      font-size: $input-label-font-size;
       border: none;
       background: none;
       box-shadow: none;
+      font-weight: $input-label-font-weight;
 
       // prevent zooming when input field is focused on mobile phone
       @include mobile {
-        font-size: $font-size-default;
+        font-size: $input-label-font-size;
+        font-weight: $input-label-font-weight;
       }
 
       &::-webkit-input-placeholder {
-        font-size: $font-size;
+        font-size: $input-label-font-size;
+        font-weight: $input-label-font-weight;
         letter-spacing: 0;
       }
 
       &::-moz-placeholder {
-        font-size: $font-size;
+        font-size: $input-label-font-size;
+        font-weight: $input-label-font-weight;
       }
 
       &:-ms-input-placeholder {
-        font-size: $font-size;
+        font-size: $input-label-font-size;
+        font-weight: $input-label-font-weight;
         line-height: 27px;
       }
 
@@ -135,7 +160,8 @@
     select,
     select:focus,
     .chzn-container-single .chzn-search input {
-      font-size: $font-size-default;
+      font-size: $input-label-font-size;
+      font-weight: $input-label-font-weight;
     }
   }
 

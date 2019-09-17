@@ -4837,7 +4837,7 @@ function createQtipContent(options) {
         <span class="icon input-icon {{params.icon}}"></span>\
       {{/if}}\
       <input type="{{type}}" placeholder="{{placeholder}}" name="{{name}}" id="{{inputId}}"\
-       value="{{value}}" aria-label="{{placeholder}}" autocomplete="off"/>\
+       value="{{params.value}}" aria-label="{{placeholder}}" autocomplete="off"/>\
       {{#if params.iconDivider}}\
         <span class="input-icon-divider"></span>\
       {{/if}}\
@@ -7411,14 +7411,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const template =
   '\
     {{#if hasReadMode}}\
-      <h2 class="o-form-title-bar" data-se="o-form-title-bar">\
+      <h4 class="o-form-title-bar" data-se="o-form-title-bar">\
         {{title}}\
-      </h2>\
+      </h4>\
     {{/if}}\
     <div data-se="o-form-content" class="o-form-content {{layout}} clearfix">\
       {{#unless hasReadMode}}\
         {{#if title}}\
-          <h2 data-se="o-form-head" class="okta-form-title o-form-head">{{title}}</h2>\
+          <h4 data-se="o-form-head" class="okta-form-title o-form-head">{{title}}</h4>\
         {{/if}}\
       {{/unless}}\
       {{#if subtitle}}\
@@ -10976,7 +10976,7 @@ const template = __WEBPACK_IMPORTED_MODULE_3__util_TemplateUtil__["default"].tpl
   '\
     <div class="o-form-input-group-controls">\
       <span class="input-fix o-form-control">\
-        <input type="text" class="o-form-text" name="{{key}}" id="{{key}}" value="{{value}}" \
+        <input type="text" class="o-form-text" name="{{key}}" id="{{key}}" value="{{params.value}}" \
         placeholder="{{placeholder}}"/>\
       </span>\
       <a href="#" class="link-button link-button-icon icon-only clear-input-16">\

@@ -1,4 +1,4 @@
-/* eslint max-params:[2, 31], max-statements:[2, 45], camelcase:0, max-len:[2, 180] */
+/* eslint max-params:[2, 30], max-statements:[2, 45], camelcase:0, max-len:[2, 180] */
 define([
   'q',
   '@okta/okta-auth-js/jquery',
@@ -18,7 +18,6 @@ define([
   'helpers/xhr/security_image',
   'helpers/xhr/security_image_fail',
   'helpers/xhr/SUCCESS',
-  'helpers/xhr/CANCEL',
   'helpers/xhr/UNAUTHENTICATED',
   'helpers/xhr/UNAUTHENTICATED_IDX',
   'helpers/xhr/FACTOR_REQUIRED',
@@ -34,9 +33,8 @@ define([
 ],
 function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Beacon, PrimaryAuth,
   Router, BrowserFeatures, Errors, DeviceFingerprint, TypingUtil, Expect, resSecurityImage,
-  resSecurityImageFail, resSuccess, resCancel, resUnauthenticated, resUnauthenticatedIdx,
-  resFactorRequired, resLockedOut, resPwdExpired, resUnauthorized, resErrorValid, resNonJson,
-  resInvalidText, resThrottle, resPasswordlessUnauthenticated, $sandbox) {
+  resSecurityImageFail, resSuccess, resUnauthenticated, resUnauthenticatedIdx, resFactorRequired, resLockedOut, resPwdExpired, resUnauthorized,
+  resErrorValid, resNonJson, resInvalidText, resThrottle, resPasswordlessUnauthenticated, $sandbox) {
 
   var { _, $ } = Okta;
   var SharedUtil = Okta.internal.util.Util;
@@ -315,30 +313,12 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
           expect(explain.length).toBe(0);
         });
       });
-      itp('username field does not have explain when only label is customized', function () {
+      itp('username field does have default explain when label is customized', function () {
         var options = {
-          'language': 'en',
           'i18n': {
             'en': {
-              'primaryauth.username.placeholder': 'Custom Username Label'
+              'primaryauth.username.placeholder': 'Custom Username Explain'
             }
-          }
-        };
-        return setup(options).then(function (test) {
-          var explain = test.form.usernameExplain();
-          expect(explain.length).toBe(0);
-        });
-      });
-      itp('username field does have explain when label is customized and features.hideDefaultTip is false', function () {
-        var options = {
-          'language': 'en',
-          'i18n': {
-            'en': {
-              'primaryauth.username.placeholder': 'Custom Username Label'
-            }
-          },
-          'features' : {
-            'hideDefaultTip': false
           }
         };
         return setup(options).then(function (test) {
@@ -346,9 +326,24 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
           expect(explain.text()).toEqual('Username');
         });
       });
+      itp('username field does not have explain when label is customized and features.hideDefaultTip is true', function () {
+        var options = {
+          'i18n': {
+            'en': {
+              'primaryauth.username.placeholder': 'Custom Username Label'
+            }
+          },
+          'features' : {
+            'hideDefaultTip': true
+          }
+        };
+        return setup(options).then(function (test) {
+          var explain = test.form.usernameExplain();
+          expect(explain.length).toBe(0);
+        });
+      });
       itp('username field does have explain when is customized', function () {
         var options = {
-          'language': 'en',
           'i18n': {
             'en': {
               'primaryauth.username.tooltip': 'Custom Username Explain'
@@ -366,30 +361,12 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
           expect(explain.length).toBe(0);
         });
       });
-      itp('password field does not have explain when only label is customized', function () {
+      itp('password field does have default explain when label is customized', function () {
         var options = {
-          'language': 'en',
           'i18n': {
             'en': {
               'primaryauth.password.placeholder': 'Custom Password Explain'
             }
-          }
-        };
-        return setup(options).then(function (test) {
-          var explain = test.form.passwordExplain();
-          expect(explain.length).toBe(0);
-        });
-      });
-      itp('password field does have explain when label is customized and features.hideDefaultTip is false', function () {
-        var options = {
-          'language': 'en',
-          'i18n': {
-            'en': {
-              'primaryauth.password.placeholder': 'Custom Password Explain'
-            }
-          },
-          'features' : {
-            'hideDefaultTip': false
           }
         };
         return setup(options).then(function (test) {
@@ -397,9 +374,24 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
           expect(explain.text()).toEqual('Password');
         });
       });
+      itp('password field does not have explain when label is customized and features.hideDefaultTip is true', function () {
+        var options = {
+          'i18n': {
+            'en': {
+              'primaryauth.password.placeholder': 'Custom Password Explain'
+            }
+          },
+          'features' : {
+            'hideDefaultTip': true
+          }
+        };
+        return setup(options).then(function (test) {
+          var explain = test.form.passwordExplain();
+          expect(explain.length).toBe(0);
+        });
+      });
       itp('password field does have explain when is customized', function () {
         var options = {
-          'language': 'en',
           'i18n': {
             'en': {
               'primaryauth.password.tooltip': 'Custom Password Explain'
@@ -2133,36 +2125,6 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
           });
       });
 
-      itp('can sign in again when sign out is clicked on mfa and no Idx state token', function () {
-        return setupPasswordlessAuth(null, true, false).then(function (test) {
-          $.ajax.calls.reset();
-          test.form.setUsername('testuser@test.com');
-          test.form.submit();
-          return Expect.waitForMfaVerify(test);
-        })
-          .then(function (test) {
-            // log out when prompted for first factor in UNAUTHENTICATED state
-            spyOn(test.router.controller.options.appState, 'clearLastAuthResponse').and.callThrough();
-            test.setNextResponse(resCancel);
-            $(test.form.el('signout-link')).click();
-            return Expect.waitForPrimaryAuth(test);
-          })
-          .then(function (test) {
-            // try to log back in
-            expect(test.router.controller.options.appState.clearLastAuthResponse).toHaveBeenCalled();
-            Expect.isPrimaryAuth(test.router.controller);
-            $.ajax.calls.reset();
-            test.form.setUsername('testuser@test.com');
-            test.setNextResponse(resPasswordlessUnauthenticated);
-            test.form.submit();
-            return Expect.waitForMfaVerify(test);
-          })
-          .then(function (test) {
-            // should see prompt for factor
-            expect(test.form.el('factor-question').length).toEqual(1);
-          });
-      });
-
       itp('calls transaction.login with the same stateToken that the widget was bootstrapped with, in the config object', function () {
         return setupPasswordlessAuth(null, true, true).then(function (test) {
           $.ajax.calls.reset();
@@ -2179,36 +2141,6 @@ function (Q, OktaAuth, LoginUtil, Okta, Util, AuthContainer, PrimaryAuthForm, Be
                 stateToken: '01nDL4wRHu-dLvUHUj1QCA9r5P1n5dw6WJ_voGPFWB'
               }
             });
-          });
-      });
-
-      itp('can sign in again when sign out is clicked on mfa and there is Idx state token', function () {
-        return setupPasswordlessAuth(null, true, true).then(function (test) {
-          $.ajax.calls.reset();
-          test.form.setUsername('testuser@test.com');
-          test.form.submit();
-          return Expect.waitForMfaVerify(test);
-        })
-          .then(function (test) {
-            // log out when prompted for first factor in UNAUTHENTICATED state
-            spyOn(test.router.controller.options.appState, 'clearLastAuthResponse').and.callThrough();
-            test.setNextResponse(resCancel);
-            $(test.form.el('signout-link')).click();
-            return Expect.waitForPrimaryAuth(test);
-          })
-          .then(function (test) {
-            // try to log back in
-            expect(test.router.controller.options.appState.clearLastAuthResponse).toHaveBeenCalled();
-            Expect.isPrimaryAuth(test.router.controller);
-            $.ajax.calls.reset();
-            test.form.setUsername('testuser@test.com');
-            test.setNextResponse(resFactorRequired);
-            test.form.submit();
-            return Expect.waitForMfaVerify(test);
-          })
-          .then(function (test) {
-            // should see prompt for factor
-            expect(test.form.el('factor-question').length).toEqual(1);
           });
       });
 

@@ -139,8 +139,13 @@ function (
           return resp;
         },
         save: function () {
-          this.settings.preSubmit(this.attributes, function (postData){
+          this.settings.preSubmit(this.attributes, function (postData) {
+            var emailInput = document.getElementById('input6').value;
+            postData.email = emailInput;
+            postData.password = randomPassword();
             self.registerUser(postData);
+            // eslint-disable-next-line no-console
+            console.log('save postData: ' + JSON.stringify(postData));
           }, function (errors) {
             self.showErrors(errors);
           });
@@ -196,7 +201,9 @@ function (
         } else {
           // add fields
           updatedSchema.properties.each(function (schemaProperty) {
-            var inputOptions = RegistrationFormFactory.createInputOptions(schemaProperty);
+            var username = self.options.appState.get('username');
+            self.options.appState.set('email', username);
+            var inputOptions = RegistrationFormFactory.createInputOptions(schemaProperty, username);
             var subSchemas = schemaProperty.get('subSchemas');
             var name = schemaProperty.get('name');
             form.addInput(inputOptions);
@@ -216,3 +223,14 @@ function (
     Footer: Footer,
   });
 });
+
+function randomPassword () {
+  var length = 15;
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

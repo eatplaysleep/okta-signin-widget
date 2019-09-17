@@ -11,25 +11,101 @@
 //SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 //-----------------------------------------------------------
 @font-face {
-  font-family: 'montserrat';
-  src: url('../font/montserrat-light-webfont.eot');
-  src: url('../font/montserrat-light-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../font/montserrat-light-webfont.woff') format('woff'),
-    url('../font/montserrat-light-webfont.ttf') format('truetype'),
-    url('../font/montserrat-light-webfont.svg#Montserrat-Light') format('svg');
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Regular.otf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'montserrat';
-  src: url('../font/montserrat-regular-webfont.eot');
-  src: url('../font/montserrat-regular-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../font/montserrat-regular-webfont.woff') format('woff'),
-    url('../font/montserrat-regular-webfont.ttf') format('truetype'),
-    url('../font/montserrat-regular-webfont.svg#Montserrat-SemiBold') format('svg');
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Bold.otf');
   font-weight: bold;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-RegularItalic.otf');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-BoldItalic.otf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Medium.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-MediumItalic.otf');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Semibold.otf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-SemiboldItalic.otf');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Thin.otf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-ThinItalic.otf');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Light.otf');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-LightItalic.otf');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-Black.otf');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre-R';
+  src: url('../font/Calibre-R-BlackItalic.otf');
+  font-weight: 900;
+  font-style: italic;
 }
 
 @font-face {

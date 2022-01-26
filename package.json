@@ -1,16 +1,16 @@
 {
   "private": true,
-  "name": "@okta/okta-signin-widget",
+  "name": "@eatplaysleep/okta-signin-widget",
   "description": "The Okta Sign-In Widget",
   "version": "6.0.0",
   "homepage": "https://github.com/okta/okta-signin-widget",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/okta/okta-signin-widget.git"
+    "url": "https://github.com/eatplayslee/okta-signin-widget.git"
   },
   "bugs": {
-    "url": "https://github.com/okta/okta-signin-widget/issues"
+    "url": "https://github.com/eatplaysleep/okta-signin-widget/issues"
   },
   "browserslist": [
     "> 0.1%",

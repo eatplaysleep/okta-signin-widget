@@ -1,5 +1,5 @@
 // Page Properties
-$fonts: 'proxima nova', 'montserrat', Arial, Helvetica, sans-serif;
+$fonts: 'Open Sans Light', sans-serif;
 $default-border-radius: 3px;
 $container-width: 400px;
 $container-min-width: 300px;
@@ -8,39 +8,39 @@ $num-tabs: 5;
 // Font Size
 $font-size: 14px;
 $font-size-small: 13px;
-$font-size-header: 15px;
+$font-size-header: 23px;
 $font-size-footer: 12px;
 $font-size-default: 15px;
 
 // Font Weight
 $font-weight-body: normal;
-$font-weight-labels: 600;
-$font-weight-header: 600;
+$font-weight-labels: 500;
+$font-weight-header: 500;
 
 // Theme Color
 $primary-bg-color: #fff;
-$secondary-bg-color: #f9f9f9;
+$secondary-bg-color: #ebece7;
 
 // Text Color
-$header-text-color: #5e5e5e;
+$header-text-color: #232323;
 $dark-text-color: #5e5e5e;
 $medium-text-color: #777;
 $light-text-color: #a7a7a7;
-$link-text-color: #0074b3;
-$placeholder-text-color: #aaa;
-$error-text-color: #e34843;
+$link-text-color: #0a7099;
+$placeholder-text-color: #999999;
+$error-text-color: #B5030F;
 
 // Button Color
 $icon-button-bg-color: #fff;
 $button-bg-color: #fbfbfb;
 $dark-button-bg-color: #929292;
-$primary-button-bg-color: #007dc1;
+$primary-button-bg-color: #045f86;
 $success-button-bg-color: #4cbf9c;
-$negative-button-bg-color: #c35151;
+$negative-button-bg-color: #b5030f;
 $disabled-button-text-color: #aaa;
 $disabled-primary-button-text-color: #fff;
-$disabled-primary-button-bg-color: #63b1d7;
-$disabled-primary-border-color: #3096c9;
+$disabled-primary-button-bg-color: #c7c7cc;
+$disabled-primary-border-color: #2e6da4;
 
 // Divider Colors
 $header-divider-color: #ddd;
@@ -85,11 +85,11 @@ $button-padding: 0 15px;
 
 // Input field
 $input-bg-color: #fff;
-$input-border-color: #bbb;
-$input-border-color-hover: #888;
-$input-border-color-focus: #0074b3;
+$input-border-color: #d3d3d3;
+$input-border-color-hover: #d3d3d3;
+$input-border-color-focus: #66afe9;
 $input-shadow-color-focus: #51cbee;
-$input-icons-color: #a7a7a7;
+$input-icons-color: #999999;
 
 // Modal
 $modal-bg-color: #f9f9f9;

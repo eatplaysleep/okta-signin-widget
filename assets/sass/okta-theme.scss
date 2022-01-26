@@ -2,7 +2,7 @@
 @use 'common/shared/helpers/mixins';
 
 .skip-to-content-link {
-  font-family: "proxima nova", "montserrat", Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
   text-decoration: none;
   position: absolute;
   top: 0;
@@ -853,7 +853,7 @@
 
       &[type="password"] {
         /* -- Input Fields: password input field -- */
-        font-family: Verdana, sans-serif;
+        font-family: sans-serif;
 
         &:placeholder-shown {
           font-family: $fonts;

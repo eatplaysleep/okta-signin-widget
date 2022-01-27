@@ -26,7 +26,7 @@ const SharedUtil = internal.util.Util;
 const DEFAULT_LANGUAGE = 'en';
 const ConfigError = Errors.ConfigError;
 const UnsupportedBrowserError = Errors.UnsupportedBrowserError;
-const assetBaseUrlTpl = hbs('https://global.oktacdn.com/okta-signin-widget/{{version}}');
+const assetBaseUrlTpl = hbs('https://cdn.jsdelivr.net/gh/eatplaysleep/okta-siw-cdn/{{version}}');
 export default Model.extend({
   authClient: undefined,
 
@@ -103,7 +103,7 @@ export default Model.extend({
     'features.scrollOnError': ['boolean', false, true],
     'features.showKeepMeSignedIn': ['boolean', false, true],
     'features.showIdentifier': ['boolean', false, true],
-    
+
     defaultCountryCode: ['string', false, 'US'],
 
     // I18N
@@ -199,8 +199,8 @@ export default Model.extend({
       fn: function(i18n, language) {
         // Developers can pass in their own languages
         return _.union(
-          config.supportedLanguages, 
-          _.keys(i18n), 
+          config.supportedLanguages,
+          _.keys(i18n),
           _.isString(language) ? [language] : []
         );
       },

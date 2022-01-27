@@ -875,13 +875,13 @@ Expect.describe('LoginRouter', function() {
 
   itp('navigates to PrimaryAuth and shows a flash error if the stateToken expires', async function() {
     // flashError is set in RouterUtil, shown in courage BaseForm method: __showErrors
-    // BaseLoginRouter will see the flashError and trigger the error on PrimaryAuth model after render 
+    // BaseLoginRouter will see the flashError and trigger the error on PrimaryAuth model after render
     const test = await setup({}, resRecovery);
     Util.mockRouterNavigate(test.router);
     test.setNextResponse(resRecovery);
     test.router.refreshAuthState('dummy-token');
     await Expect.waitForRecoveryQuestion(test);
-    
+
     test.setNextResponse(errorInvalidToken);
     let form = new RecoveryForm($sandbox);
 
@@ -913,7 +913,7 @@ Expect.describe('LoginRouter', function() {
         },
       ],
     ]);
-    
+
     form = new PrimaryAuthForm($sandbox);
     expect(form.isPrimaryAuth()).toBe(true);
     expect(form.hasErrors()).toBe(true);
@@ -1876,7 +1876,7 @@ Expect.describe('LoginRouter', function() {
       '/labels/json/country_ja.json'
     );
 
-    const expectDefaultCdn = _.partial(expectBundles, 'https://global.oktacdn.com/okta-signin-widget/9.9.99');
+    const expectDefaultCdn = _.partial(expectBundles, 'https://cdn.jsdelivr.net/gh/eatplaysleep/okta-siw-cdn/9.9.99');
 
     itp('loads properties from the cdn if no baseUrl and path overrides are supplied', function() {
       return setupLanguage({
@@ -1885,7 +1885,7 @@ Expect.describe('LoginRouter', function() {
           language: 'ja',
         },
       }).then(function() {
-        expectDefaultPaths('https://global.oktacdn.com/okta-signin-widget/9.9.99');
+        expectDefaultPaths('https://cdn.jsdelivr.net/gh/eatplaysleep/okta-siw-cdn/9.9.99');
       });
     });
     itp('loads properties from the given baseUrl', function() {

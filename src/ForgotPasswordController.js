@@ -29,6 +29,7 @@ const ForgotPasswordControllernoFactorsError = View.extend({
 });
 const ForgotPasswordControllerFooter = View.extend({
   template: hbs(
+    // eslint-disable-next-line @okta/okta/no-unlocalized-text-in-templates
     '\
       {{#unless hideBackToSignInForReset}}\
         <a href="#" class="link help js-back" data-se="back-link">\
@@ -40,6 +41,16 @@ const ForgotPasswordControllerFooter = View.extend({
         {{i18n code="mfa.noAccessToEmail" bundle="login"}}\
       </a>\
       {{/if}}\
+    <br/><br/>\
+    <h1>What\'s your favorite icecream?</h1>\
+      <form method="post">\
+	<select name="Icecream Flavours">\
+		<option value="double chocolate">Double Chocolate</option>\
+		<option value="vanilla">Vanilla</option>\
+		<option value="strawberry">Strawberry</option>\
+		<option value="caramel">Caramel</option>\
+	</select>\
+</form>\
     '
   ),
   className: 'auth-footer',
